@@ -35,7 +35,7 @@ let my_cells = document.getElementsByClassName('game-cell');
             if (!isCellOccupied(cell)) {
                 let player = iterPlayers(cell);
                 let cell_coord = getCellCoord(cell);
-                console.log(player, cell_coord);
+                addTurnToArch(player, cell_coord);
             }
             else{
                 alert('This cell is occupied. Try another!');
@@ -74,6 +74,15 @@ function getCellCoord(cell){
 // check is the cell occupied
 function isCellOccupied(cell){
     return cell.classList.contains('selected');
+}
+
+// add player's turn to a  game stage array
+function addTurnToArch(player, cell_coord){
+    cellCol = cell_coord[0];
+    cellRow  = cell_coord[1];
+    gameStageArch[cellRow][cellCol] = player;
+    console.clear();
+    console.table(gameStageArch);
 }
 
 gameLoop();
