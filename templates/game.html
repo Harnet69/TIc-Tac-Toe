@@ -6,7 +6,7 @@
 
 {% block content %}
     <nav class="navbar fixed-top navbar-light">
-        <button id="retry-button" class="btn btn-success">Try again?</button>
+        <button id="retry-button" class="btn btn-success" onclick="window.location.reload(false);">Try again?</button>
         <a href="/" class="btn btn-outline-dark">Reset settings</a>
     </nav>
     <div id="game-board" class="mb-3" data-row-num="{{ row_num }}" data-col-num="{{ col_num }}" data-win-size="{{ win_size }}">
