@@ -21,7 +21,7 @@ function createGameStageArch(){
     for(let row=0;row<rows;row++){
         gameStageArch[row] = [];
         for(let col=0;col<cols;col++){
-            gameStageArch[row][col] = false;
+            gameStageArch[row][col] = 0;
         }
     }
 }
@@ -90,13 +90,13 @@ function addTurnToArch(player, cell_coord){
 
 // win condition
 function win_condition(){
-    winHoriz();
+    let horiz = winHoriz();
+    if(horiz) {
+        return [horiz[0], horiz[1]];
+    }
     if(draw) {
         return [draw(), "It's a draw"];
     }
-    if(winHoriz){
-        return [winHoriz(), "Win Horizontally"];
-        }
 }
 
 // dead heat(draw)
@@ -118,16 +118,17 @@ function draw() {
 function winHoriz() {
     for(let row=0;row<gameStageArch.length;row++){
         for(let col=0;col<gameStageArch[0].length;col++) {
-            if (gameStageArch[row][col] + gameStageArch[row][col+1] + gameStageArch[row][col+2] === 3) {
-                alert('Player 1 win');
-            }
-            if (gameStageArch[row][col] + gameStageArch[row][col+1] + gameStageArch[row][col+2] === 6) {
-                alert('Player 2 win');
+            if (gameStageArch[row][col] === gameStageArch[row][col+1]
+                && gameStageArch[row][col+1] === gameStageArch[row][col+2]) {
+                if(gameStageArch[row][col] === 1) {
+                    return [true, 'Player 1 won horizontally'];
+                }
+                if(gameStageArch[row][col] === 2){
+                    return[true, 'Player 2 won horizontally'];
+                }
             }
         }
-        // console.log(gameStageArch[row]);
     }
-    return true;
 }
 
 gameLoop();
