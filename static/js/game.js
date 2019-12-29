@@ -1,5 +1,5 @@
 // alert('You should write code into "static/js/game.js" to make it work');
-const gameStageArch = [];
+var gameStageArch = [];
 const player1 = 'O';
 const player2 = 'X';
 let pl = 2;
@@ -16,7 +16,14 @@ function getBoardSize(){
 // build game stage archive according to border size
 function createGameStageArch(){
     let borderSize = getBoardSize();
-    console.log(borderSize);
+    let rows = borderSize[0];
+    let cols = borderSize[1];
+    for(let row=0;row<rows;row++){
+        gameStageArch[row] = [];
+        for(let col=0;col<cols;col++){
+            gameStageArch[row][col] = 0;
+        }
+    }
 }
 
 // main game loop
@@ -70,3 +77,4 @@ function isCellOccupied(cell){
 }
 
 gameLoop();
+console.table(gameStageArch);
