@@ -40,6 +40,9 @@ let my_cells = document.getElementsByClassName('game-cell');
             else{
                 alert('This cell is occupied. Try another!');
             }
+        if (win_condition()[0]){
+           alert(win_condition()[1]);
+        }
         } );
         cell.addEventListener('mouseover', function () {
             if (isCellOccupied(cell)) {
@@ -50,7 +53,7 @@ let my_cells = document.getElementsByClassName('game-cell');
 }
 
 // iterate players
-function iterPlayers (cell) {
+function iterPlayers(cell){
     if (pl === 1) {
         cell.textContent = player1;
         cell.classList.add('selected');
@@ -78,11 +81,31 @@ function isCellOccupied(cell){
 
 // add player's turn to a  game stage array
 function addTurnToArch(player, cell_coord){
-    cellCol = cell_coord[0];
-    cellRow  = cell_coord[1];
+    let cellCol = cell_coord[0];
+    let cellRow  = cell_coord[1];
     gameStageArch[cellRow][cellCol] = player;
     console.clear();
     console.table(gameStageArch);
+}
+
+// win condition
+function win_condition() {
+    return [draw(), "It's a draw"];
+}
+
+// dead heat(draw)
+function draw() {
+    let occupiedCells = 0;
+    let gameStageArchLength = gameStageArch.length * gameStageArch[0].length;
+    let my_cells = document.getElementsByClassName('game-cell');
+    for(let cell of my_cells){
+        if(isCellOccupied(cell)){
+            occupiedCells++;
+        }
+    }
+    if(gameStageArchLength === occupiedCells){
+        return true;
+    }
 }
 
 gameLoop();
