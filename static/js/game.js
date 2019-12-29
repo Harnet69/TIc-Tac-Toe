@@ -42,6 +42,7 @@ let my_cells = document.getElementsByClassName('game-cell');
             }
             if (win_condition()[0]){
                alert(win_condition()[1]);
+               window.location.reload(false);
             }
         } );
         cell.addEventListener('mouseover', function () {
@@ -91,8 +92,12 @@ function addTurnToArch(player, cell_coord){
 // win condition
 function win_condition(){
     let horiz = winHoriz();
+    let vert = winVert();
     if(horiz) {
         return [horiz[0], horiz[1]];
+    }
+    if(vert) {
+        return [vert[0], vert[1]];
     }
     if(draw) {
         return [draw(), "It's a draw"];
@@ -125,6 +130,23 @@ function winHoriz() {
                 }
                 if(gameStageArch[row][col] === 2){
                     return[true, 'Player 2 won horizontally'];
+                }
+            }
+        }
+    }
+}
+
+// vertical winning
+function winVert() {
+    for(let col=0;col<gameStageArch[0].length;col++){
+        for(let row=0;row<gameStageArch.length-2;row++){
+            if (gameStageArch[row][col] === gameStageArch[row+1][col]
+                && gameStageArch[row+1][col] === gameStageArch[row+2][col]) {
+                if(gameStageArch[row][col] === 1) {
+                    return [true, 'Player 1 won vertically'];
+                }
+                if(gameStageArch[row][col] === 2){
+                    return[true, 'Player 2 won  vertically'];
                 }
             }
         }
