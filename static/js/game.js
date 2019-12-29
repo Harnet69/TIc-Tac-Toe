@@ -1,9 +1,27 @@
 // alert('You should write code into "static/js/game.js" to make it work');
+const gameStageArch = [];
 const player1 = 'O';
 const player2 = 'X';
 let pl = 2;
 
+// get board size
+function getBoardSize(){
+    let board = document.getElementById('game-board');
+    let rowsNum = board.getAttribute('data-row-num');
+    let colsNum = board.getAttribute('data-col-num');
+
+    return [+rowsNum, +colsNum]
+}
+
+// build game stage archive according to border size
+function createGameStageArch(){
+    let borderSize = getBoardSize();
+    console.log(borderSize);
+}
+
+// main game loop
 function gameLoop(){
+createGameStageArch();
 let my_cells = document.getElementsByClassName('game-cell');
     for(let cell of my_cells){
         cell.addEventListener('click', function () {
@@ -13,7 +31,6 @@ let my_cells = document.getElementsByClassName('game-cell');
                 console.log(player, cell_coord);
             }
             else{
-                cell.style.cursor = 'wait';
                 alert('This cell is occupied. Try another!');
             }
         } );
@@ -40,6 +57,7 @@ function iterPlayers (cell) {
     return pl;
 }
 
+// get the clicked cell coordinates
 function getCellCoord(cell){
     let dataCoordinateX = cell.getAttribute('data-coordinate-x');
     let dataCoordinateY = cell.getAttribute('data-coordinate-y');
@@ -49,7 +67,6 @@ function getCellCoord(cell){
 // check is the cell occupied
 function isCellOccupied(cell){
     return cell.classList.contains('selected');
-
 }
 
 gameLoop();
