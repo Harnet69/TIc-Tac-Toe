@@ -3,24 +3,30 @@ const player1 = 'O';
 const player2 = 'X';
 let pl = 2;
 
-function player_turn(){
+function gameLoop(){
 let my_cells = document.getElementsByClassName('game-cell');
     for(let cell of my_cells){
         cell.addEventListener('click', function () {
-            if (isCellOccupied(cell)) {
-                let player = myClick(cell);
+            if (!isCellOccupied(cell)) {
+                let player = iterPlayers(cell);
                 let cell_coord = getCellCoord(cell);
                 console.log(player, cell_coord);
             }
             else{
-                alert('This cell is occupied. Try another!')
+                cell.style.cursor = 'wait';
+                alert('This cell is occupied. Try another!');
+            }
+        } );
+        cell.addEventListener('mouseover', function () {
+            if (isCellOccupied(cell)) {
+                cell.style.cursor = 'not-allowed';
             }
         } );
     }
 }
 
-
-function myClick (cell) {
+// iterate players
+function iterPlayers (cell) {
     if (pl === 1) {
         cell.textContent = player1;
         cell.classList.add('selected');
@@ -42,10 +48,8 @@ function getCellCoord(cell){
 
 // check is the cell occupied
 function isCellOccupied(cell){
-    if(cell.classList.contains('selected')){
-        return false;
-    }
-    return true;
+    return cell.classList.contains('selected');
+
 }
 
-player_turn();
+gameLoop();
