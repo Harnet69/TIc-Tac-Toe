@@ -21,7 +21,7 @@ function createGameStageArch(){
     for(let row=0;row<rows;row++){
         gameStageArch[row] = [];
         for(let col=0;col<cols;col++){
-            gameStageArch[row][col] = 0;
+            gameStageArch[row][col] = false;
         }
     }
 }
@@ -40,9 +40,9 @@ let my_cells = document.getElementsByClassName('game-cell');
             else{
                 alert('This cell is occupied. Try another!');
             }
-        if (win_condition()[0]){
-           alert(win_condition()[1]);
-        }
+            if (win_condition()[0]){
+               alert(win_condition()[1]);
+            }
         } );
         cell.addEventListener('mouseover', function () {
             if (isCellOccupied(cell)) {
@@ -89,8 +89,14 @@ function addTurnToArch(player, cell_coord){
 }
 
 // win condition
-function win_condition() {
-    return [draw(), "It's a draw"];
+function win_condition(){
+    winHoriz();
+    if(draw) {
+        return [draw(), "It's a draw"];
+    }
+    if(winHoriz){
+        return [winHoriz(), "Win Horizontally"];
+        }
 }
 
 // dead heat(draw)
@@ -106,6 +112,22 @@ function draw() {
     if(gameStageArchLength === occupiedCells){
         return true;
     }
+}
+
+// horizontal winning
+function winHoriz() {
+    for(let row=0;row<gameStageArch.length;row++){
+        for(let col=0;col<gameStageArch[0].length;col++) {
+            if (gameStageArch[row][col] + gameStageArch[row][col+1] + gameStageArch[row][col+2] === 3) {
+                alert('Player 1 win');
+            }
+            if (gameStageArch[row][col] + gameStageArch[row][col+1] + gameStageArch[row][col+2] === 6) {
+                alert('Player 2 win');
+            }
+        }
+        // console.log(gameStageArch[row]);
+    }
+    return true;
 }
 
 gameLoop();
