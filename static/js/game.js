@@ -93,11 +93,19 @@ function addTurnToArch(player, cell_coord){
 function win_condition(){
     let horiz = winHoriz();
     let vert = winVert();
+    let diag = winDiag();
+    let anotherDiag = winAnotherDiag();
     if(horiz) {
         return [horiz[0], horiz[1]];
     }
     if(vert) {
         return [vert[0], vert[1]];
+    }
+    if(diag) {
+        return [diag[0], diag[1]];
+    }
+    if(anotherDiag) {
+        return [anotherDiag[0], anotherDiag[1]];
     }
     if(draw) {
         return [draw(), "It's a draw"];
@@ -147,6 +155,39 @@ function winVert() {
                 }
                 if(gameStageArch[row][col] === 2){
                     return[true, 'Player 2 won  vertically'];
+                }
+            }
+        }
+    }
+}
+// diagonal \ winning
+function winDiag() {
+    for(let col=0;col<gameStageArch[0].length-2;col++){
+        for(let row=0;row<gameStageArch.length-2;row++){
+            if (gameStageArch[row][col] === gameStageArch[row+1][col+1]
+                && gameStageArch[row+1][col+1] === gameStageArch[row+2][col+2]) {
+                if(gameStageArch[row][col] === 1) {
+                    return [true, "Player 1 won diagonally \\"];
+                }
+                if(gameStageArch[row][col] === 2){
+                    return[true, 'Player 2 won diagonally \\'];
+                }
+            }
+        }
+    }
+}
+
+// another diagonal / winning
+function winAnotherDiag() {
+    for(let col=2;col<gameStageArch[0].length;col++){
+        for(let row=0;row<gameStageArch.length-2;row++){
+            if (gameStageArch[row][col] === gameStageArch[row+1][col-1]
+                && gameStageArch[row+1][col-1] === gameStageArch[row+2][col-2]) {
+                if(gameStageArch[row][col] === 1) {
+                    return [true, "Player 1 won diagonally /"];
+                }
+                if(gameStageArch[row][col] === 2){
+                    return[true, 'Player 2 won diagonally /'];
                 }
             }
         }
