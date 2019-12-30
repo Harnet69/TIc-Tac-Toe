@@ -36,13 +36,16 @@ let my_cells = document.getElementsByClassName('game-cell');
                 let player = iterPlayers(cell);
                 let cell_coord = getCellCoord(cell);
                 addTurnToArch(player, cell_coord);
+                if (win_condition()[0]){
+                   console.log(win_condition()[1]);
+                   colorWinCells(win_condition()[2]);
+                   // setInterval(function(){
+                   // window.location.reload(true);
+                   // }, 2000);
+                }
             }
             else{
                 alert('This cell is occupied. Try another!');
-            }
-            if (win_condition()[0]){
-               alert(win_condition()[1]);
-               window.location.reload(false);
             }
         } );
         cell.addEventListener('mouseover', function () {
@@ -96,7 +99,7 @@ function win_condition(){
     let diag = winDiag();
     let anotherDiag = winAnotherDiag();
     if(horiz) {
-        return [horiz[0], horiz[1]];
+        return [horiz[0], horiz[1], horiz[2]];
     }
     if(vert) {
         return [vert[0], vert[1]];
@@ -133,11 +136,12 @@ function winHoriz() {
         for(let col=0;col<gameStageArch[0].length;col++) {
             if (gameStageArch[row][col] === gameStageArch[row][col+1]
                 && gameStageArch[row][col+1] === gameStageArch[row][col+2]) {
+                let winComb = [[row,col],[row,col+1],[row,col+2]];
                 if(gameStageArch[row][col] === 1) {
-                    return [true, 'Player 1 won horizontally'];
+                    return [true, 'Player 1 won horizontally', winComb];
                 }
                 if(gameStageArch[row][col] === 2){
-                    return[true, 'Player 2 won horizontally'];
+                    return[true, 'Player 2 won horizontally', winComb];
                 }
             }
         }
@@ -189,6 +193,20 @@ function winAnotherDiag() {
                 if(gameStageArch[row][col] === 2){
                     return[true, 'Player 2 won diagonally /'];
                 }
+            }
+        }
+    }
+}
+
+// color winning cells
+function colorWinCells(cellsCoordinates=[[0,0],[1,1],[2,2]]) {
+    let my_cells = document.getElementsByClassName('game-cell');
+    for(let cell of my_cells){
+        let cellRow = cell.getAttribute('data-coordinate-x');
+        let cellCol = cell.getAttribute('data-coordinate-y');
+        for(let arr of cellsCoordinates){
+            if(arr[1] === +cellRow && arr[0] === +cellCol){
+                cell.classList.add('winCell');
             }
         }
     }

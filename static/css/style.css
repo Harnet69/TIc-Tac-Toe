@@ -19,6 +19,10 @@ body {
     vertical-align: middle;
 }
 
+.winCell{
+    background-color: red;
+}
+
 navbar {
     background-color: transparent;
 }
