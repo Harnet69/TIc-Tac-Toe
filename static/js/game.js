@@ -37,11 +37,11 @@ let my_cells = document.getElementsByClassName('game-cell');
                 let cell_coord = getCellCoord(cell);
                 addTurnToArch(player, cell_coord);
                 if (win_condition()[0]){
-                   console.log(win_condition()[1]);
+                   alert(win_condition()[1]);
                    colorWinCells(win_condition()[2]);
-                   // setInterval(function(){
-                   // window.location.reload(true);
-                   // }, 2000);
+                   setInterval(function(){
+                   window.location.reload(true);
+                   }, 2000);
                 }
             }
             else{
@@ -102,13 +102,13 @@ function win_condition(){
         return [horiz[0], horiz[1], horiz[2]];
     }
     if(vert) {
-        return [vert[0], vert[1]];
+        return [vert[0], vert[1], vert[2]];
     }
     if(diag) {
-        return [diag[0], diag[1]];
+        return [diag[0], diag[1], diag[2]];
     }
     if(anotherDiag) {
-        return [anotherDiag[0], anotherDiag[1]];
+        return [anotherDiag[0], anotherDiag[1], anotherDiag[2]];
     }
     if(draw) {
         return [draw(), "It's a draw"];
@@ -154,11 +154,12 @@ function winVert() {
         for(let row=0;row<gameStageArch.length-2;row++){
             if (gameStageArch[row][col] === gameStageArch[row+1][col]
                 && gameStageArch[row+1][col] === gameStageArch[row+2][col]) {
+                let winComb = [[row,col],[row+1,col],[row+2,col]];
                 if(gameStageArch[row][col] === 1) {
-                    return [true, 'Player 1 won vertically'];
+                    return [true, 'Player 1 won vertically', winComb];
                 }
                 if(gameStageArch[row][col] === 2){
-                    return[true, 'Player 2 won  vertically'];
+                    return[true, 'Player 2 won  vertically', winComb];
                 }
             }
         }
@@ -170,11 +171,12 @@ function winDiag() {
         for(let row=0;row<gameStageArch.length-2;row++){
             if (gameStageArch[row][col] === gameStageArch[row+1][col+1]
                 && gameStageArch[row+1][col+1] === gameStageArch[row+2][col+2]) {
+                let winComb = [[row,col],[row+1,col+1],[row+2,col+2]];
                 if(gameStageArch[row][col] === 1) {
-                    return [true, "Player 1 won diagonally \\"];
+                    return [true, "Player 1 won diagonally \\", winComb];
                 }
                 if(gameStageArch[row][col] === 2){
-                    return[true, 'Player 2 won diagonally \\'];
+                    return[true, 'Player 2 won diagonally \\', winComb];
                 }
             }
         }
@@ -187,11 +189,12 @@ function winAnotherDiag() {
         for(let row=0;row<gameStageArch.length-2;row++){
             if (gameStageArch[row][col] === gameStageArch[row+1][col-1]
                 && gameStageArch[row+1][col-1] === gameStageArch[row+2][col-2]) {
+                let winComb = [[row,col],[row+1,col-1],[row+2,col-2]];
                 if(gameStageArch[row][col] === 1) {
-                    return [true, "Player 1 won diagonally /"];
+                    return [true, "Player 1 won diagonally /", winComb];
                 }
                 if(gameStageArch[row][col] === 2){
-                    return[true, 'Player 2 won diagonally /'];
+                    return[true, 'Player 2 won diagonally /', winComb];
                 }
             }
         }
